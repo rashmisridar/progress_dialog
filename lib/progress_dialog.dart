@@ -48,6 +48,7 @@ class ProgressDialog {
     _barrierDismissible = isDismissible ?? true;
     _showLogs = showLogs ?? false;
     _customBody = customBody ?? null;
+
   //  _direction = textDirection ?? TextDirection.ltr;
   }
 
@@ -256,7 +257,7 @@ class _BodyState extends State<_Body> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               // row body
-            Center(child: CircularProgressIndicator(),)
+            Center(child:_progressWidget,)
             ]
           ),
         );
