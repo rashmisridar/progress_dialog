@@ -27,7 +27,7 @@ TextStyle _progressTextStyle = TextStyle(
 double _dialogElevation = 8.0, _borderRadius = 8.0;
 Color _backgroundColor = Colors.white;
 Curve _insetAnimCurve = Curves.easeInOut;
-EdgeInsets _dialogPadding = const EdgeInsets.all(8.0);
+EdgeInsets _dialogPadding = const EdgeInsets.all(0.0);
 
 Widget _progressWidget = Image.asset(
   'assets/double_ring_loading_io.gif',
@@ -41,25 +41,25 @@ class ProgressDialog {
       {ProgressDialogType type,
         bool isDismissible,
         bool showLogs,
-        TextDirection textDirection,
+       // TextDirection textDirection,
         Widget customBody}) {
     _context = context;
     _progressDialogType = type ?? ProgressDialogType.Normal;
     _barrierDismissible = isDismissible ?? true;
     _showLogs = showLogs ?? false;
     _customBody = customBody ?? null;
-    _direction = textDirection ?? TextDirection.ltr;
+  //  _direction = textDirection ?? TextDirection.ltr;
   }
 
   void style(
       {Widget child,
       double progress,
       double maxProgress,
-      String message,
+     /* String message,*/
       Widget progressWidget,
       Color backgroundColor,
-      TextStyle progressTextStyle,
-      TextStyle messageTextStyle,
+  /*    TextStyle progressTextStyle,
+      TextStyle messageTextStyle,*/
       double elevation,
       TextAlign textAlign,
       double borderRadius,
@@ -71,12 +71,12 @@ class ProgressDialog {
       _progress = progress ?? _progress;
     }
 
-    _dialogMessage = message ?? _dialogMessage;
+ /*   _dialogMessage = message ?? _dialogMessage;*/
     _maxProgress = maxProgress ?? _maxProgress;
     _progressWidget = progressWidget ?? _progressWidget;
     _backgroundColor = backgroundColor ?? _backgroundColor;
-    _messageStyle = messageTextStyle ?? _messageStyle;
-    _progressTextStyle = progressTextStyle ?? _progressTextStyle;
+   /* _messageStyle = messageTextStyle ?? _messageStyle;
+    _progressTextStyle = progressTextStyle ?? _progressTextStyle;*/
     _dialogElevation = elevation ?? _dialogElevation;
     _borderRadius = borderRadius ?? _borderRadius;
     _insetAnimCurve = insetAnimCurve ?? _insetAnimCurve;
@@ -90,19 +90,19 @@ class ProgressDialog {
   void update(
       {double progress,
       double maxProgress,
-      String message,
+     /* String message,*/
       Widget progressWidget,
-      TextStyle progressTextStyle,
-      TextStyle messageTextStyle}) {
+     /* TextStyle progressTextStyle,
+      TextStyle messageTextStyle*/}) {
     if (_progressDialogType == ProgressDialogType.Download) {
       _progress = progress ?? _progress;
     }
 
-    _dialogMessage = message ?? _dialogMessage;
+  /*  _dialogMessage = message ?? _dialogMessage;*/
     _maxProgress = maxProgress ?? _maxProgress;
     _progressWidget = progressWidget ?? _progressWidget;
-    _messageStyle = messageTextStyle ?? _messageStyle;
-    _progressTextStyle = progressTextStyle ?? _progressTextStyle;
+/*    _messageStyle = messageTextStyle ?? _messageStyle;
+    _progressTextStyle = progressTextStyle ?? _progressTextStyle;*/
 
     if (_isShowing) _dialog.update();
   }
@@ -209,20 +209,20 @@ class _BodyState extends State<_Body> {
     );
 
     final text = Expanded(
-      child: _progressDialogType == ProgressDialogType.Normal
-          ? Text(
+      child:
+          /*? Text(
         _dialogMessage,
         textAlign: _textAlign,
         style: _messageStyle,
         textDirection: _direction,
       )
-          : Padding(
+          :*/ Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(height: 8.0),
-            Row(
+           // SizedBox(height: 8.0),
+         /*   Row(
               children: <Widget>[
                 Expanded(
                     child: Text(
@@ -231,8 +231,8 @@ class _BodyState extends State<_Body> {
                       textDirection: _direction,
                     )),
               ],
-            ),
-            SizedBox(height: 4.0),
+            ),*/
+           /* SizedBox(height: 4.0),
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
@@ -240,7 +240,7 @@ class _BodyState extends State<_Body> {
                 style: _progressTextStyle,
                 textDirection: _direction,
               ),
-            ),
+            ),*/
           ],
         ),
       ),
@@ -248,22 +248,16 @@ class _BodyState extends State<_Body> {
 
     return _customBody ??
         Container(
+          /*height: 5,
+          width: 5,*/
+          color: Colors.transparent,
           padding: _dialogPadding,
-          child: Column(
+            child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               // row body
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(width: 8.0),
-                  _direction == TextDirection.ltr ? loader : text,
-                  const SizedBox(width: 8.0),
-                  _direction == TextDirection.rtl ? loader : text,
-                  const SizedBox(width: 8.0)
-                ],
-              ),
-            ],
+            Center(child: CircularProgressIndicator(),)
+            ]
           ),
         );
   }
